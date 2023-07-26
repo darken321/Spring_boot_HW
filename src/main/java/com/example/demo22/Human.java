@@ -1,8 +1,8 @@
 package com.example.demo22;
 
 public class Human {
-    String name;
-    int age;
+    private String name;
+    private int age;
 
     public Human(String name, int age) {
         this.name = name;

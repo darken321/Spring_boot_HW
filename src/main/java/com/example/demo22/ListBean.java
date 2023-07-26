@@ -12,11 +12,11 @@ import java.util.List;
 
 @Component
 @Profile("list")
-public class BeanList implements People {
+public class ListBean implements People {
     private final List<Human> people = new ArrayList<>();
 
-    public BeanList() {
-        System.out.println("BeanList.BeanList");
+    public ListBean() {
+        System.out.println("ListBean.ListBean");
     }
 
     @PostConstruct
@@ -33,7 +33,8 @@ public class BeanList implements People {
         int input;
         do {
             System.out.println("\nВведите 1 для вывода всех людей, 2 для добавления нового, 0 для выхода ");
-            while (reader.ready() && reader.read() != '\n') {}
+            while (reader.ready() && reader.read() != '\n') {
+            }
             String s = reader.readLine(); // вылет!
             input = Integer.parseInt(s);
             switch (input) {
