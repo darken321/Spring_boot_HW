@@ -3,9 +3,9 @@ package com.example.demo22;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.List;
 
-@Component
 public interface People {
-    void readHuman();
-    void addHuman() throws IOException;
+    List<Human> readHuman();
+    void addHuman(Human human);
 }
