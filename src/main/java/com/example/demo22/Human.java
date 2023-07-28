@@ -27,6 +27,6 @@ public class Human {
 
     @Override
     public String toString() {
-        return name + '\n' + age;
+        return name + ' ' + age;
     }
 }

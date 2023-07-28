@@ -26,12 +26,17 @@ public class Menu {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             int input;
             do {
-                System.out.println("\nВведите 1 для вывода всех людей, 2 для добавления нового, 0 для выхода ");
+                System.out.println("\nВведите " +
+                                   "1 для вывода всех, " +
+                                   "2 для добавления, " +
+                                   "3 для удаления, "+
+                                   "0 для выхода");
                 input = Integer.parseInt(reader.readLine());
                 switch (input) {
                     case 0 -> System.out.println("Пока!\n");
                     case 1 -> readAll();
                     case 2 -> add(reader);
+                    case 3 -> delete(reader);
                     default -> System.out.println("Вы ввели " + input + " - неверное значение");
                 }
             } while (input != 0);
@@ -42,12 +47,21 @@ public class Menu {
         people.readHuman().forEach(System.out::println);
     }
 
-    private void add(BufferedReader reader) throws IOException {
+    private void add(BufferedReader reader) {
         people.addHuman(readHuman.readHuman(reader));
 //        System.out.print("Введите ваше имя: ");
 //        String name = reader.readLine().trim();
 //        System.out.print("Введите ваш возраст: ");
 //        int age = Integer.parseInt(reader.readLine().trim());
 //        people.addHuman(new Human(name, age));
+    }
+    private void delete(BufferedReader reader){
+        System.out.print("Введите ваше имя для удаления: ");
+        try {
+            String name = reader.readLine().trim();
+            System.out.println("Удаление " + name + " " + (!people.deleteHuman(name)?"не":"")+"успешно");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

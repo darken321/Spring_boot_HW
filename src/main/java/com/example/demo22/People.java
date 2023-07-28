@@ -8,4 +8,5 @@ import java.util.List;
 public interface People {
     List<Human> readHuman();
     void addHuman(Human human);
+    boolean deleteHuman(String name);
 }

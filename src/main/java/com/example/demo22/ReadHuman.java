@@ -12,9 +12,9 @@ public class ReadHuman {
         String name;
         int age;
         try {
-            System.out.println("Введите имя: ");
+            System.out.print("Введите имя: ");
             name = bufferedReader.readLine();
-            System.out.println("Введите возраст: ");
+            System.out.print("Введите возраст: ");
             age = Integer.parseInt(bufferedReader.readLine());
         } catch (IOException e) {
             throw new RuntimeException(e);

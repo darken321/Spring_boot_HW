@@ -26,18 +26,19 @@ public class FileBean implements People {
 
     @Override
     public List<Human> readHuman() {
-        System.out.println("Список всех людей из файла:");
-        List<Human> people = new ArrayList<>();
+        List<Human> list = new ArrayList<>();
         try (FileReader fileReader = new FileReader(myFileProperty);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             String name;
+            int age;
             while ((name = bufferedReader.readLine()) != null) {
-                people.add(new Human(name, Integer.parseInt(bufferedReader.readLine())));
+                age = Integer.parseInt(bufferedReader.readLine());
+                list.add(new Human(name, age));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return people;
+        return list;
     }
 
     @Override
@@ -47,5 +48,17 @@ public class FileBean implements People {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public boolean deleteHuman(String searchName) {
+        List<Human> list = this.readHuman();
+        int index = Utils.indexOfHuman(searchName, list);
+        if (index != -1) {
+            list.remove(index);
+            new File(myFileProperty).delete();
+            list.forEach(this::addHuman);
+        }
+        return index > -1;
     }
 }

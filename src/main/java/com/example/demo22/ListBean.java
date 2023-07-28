@@ -21,16 +21,29 @@ public class ListBean implements People {
         System.out.println("Метод init класса ListBean PostConstruct");
         people.add(new Human("Дима", 25));
         people.add(new Human("Миша", 33));
+        people.add(new Human("Лена", 28));
     }
 
     @Override
-    public List<Human> readHuman() {
-        System.out.println("Список всех людей из листа:");
-        return people;
+    public ArrayList<Human> readHuman() {
+        return (ArrayList<Human>) people;
     }
 
     @Override
     public void addHuman(Human human) {
         people.add(human);
+    }
+
+    @Override
+    public boolean deleteHuman(String name) {
+        int index = -1;
+        for (int i = 0; i < people.size(); i++) {
+            if (people.get(i).getName().equals(name)) {
+                index = i;
+                people.remove(index);
+                break;
+            }
+        }
+        return index > -1;
     }
 }
