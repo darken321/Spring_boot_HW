@@ -26,7 +26,7 @@ public class Menu {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             int input;
             do {
-                System.out.println("Введите 1 для вывода всех людей, 2 для добавления нового, 0 для выхода ");
+                System.out.println("\nВведите 1 для вывода всех людей, 2 для добавления нового, 0 для выхода ");
                 input = Integer.parseInt(reader.readLine());
                 switch (input) {
                     case 0 -> System.out.println("Пока!\n");
