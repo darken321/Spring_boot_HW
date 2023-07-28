@@ -36,14 +36,10 @@ public class ListBean implements People {
 
     @Override
     public boolean deleteHuman(String name) {
-        int index = -1;
-        for (int i = 0; i < people.size(); i++) {
-            if (people.get(i).getName().equals(name)) {
-                index = i;
+        int index = Utils.indexOfHuman(name, people);
+            if (index>=0) {
                 people.remove(index);
-                break;
             }
-        }
         return index > -1;
     }
 }

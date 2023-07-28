@@ -27,8 +27,15 @@ public class FileBean implements People {
     @Override
     public List<Human> readHuman() {
         List<Human> list = new ArrayList<>();
-        try (FileReader fileReader = new FileReader(myFileProperty);
-             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+        File file = new File(myFileProperty);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(myFileProperty))) {
             String name;
             int age;
             while ((name = bufferedReader.readLine()) != null) {

@@ -29,7 +29,7 @@ public class Menu {
                 System.out.println("\nВведите " +
                                    "1 для вывода всех, " +
                                    "2 для добавления, " +
-                                   "3 для удаления, "+
+                                   "3 для удаления, " +
                                    "0 для выхода");
                 input = Integer.parseInt(reader.readLine());
                 switch (input) {
@@ -49,17 +49,13 @@ public class Menu {
 
     private void add(BufferedReader reader) {
         people.addHuman(readHuman.readHuman(reader));
-//        System.out.print("Введите ваше имя: ");
-//        String name = reader.readLine().trim();
-//        System.out.print("Введите ваш возраст: ");
-//        int age = Integer.parseInt(reader.readLine().trim());
-//        people.addHuman(new Human(name, age));
     }
-    private void delete(BufferedReader reader){
+
+    private void delete(BufferedReader reader) {
         System.out.print("Введите ваше имя для удаления: ");
         try {
             String name = reader.readLine().trim();
-            System.out.println("Удаление " + name + " " + (!people.deleteHuman(name)?"не":"")+"успешно");
+            System.out.println("Удаление " + name + " " + (!people.deleteHuman(name) ? "не" : "") + "успешно");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
