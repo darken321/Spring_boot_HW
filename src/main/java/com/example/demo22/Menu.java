@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 @Component
 public class Menu {
@@ -44,7 +45,10 @@ public class Menu {
     }
 
     private void readAll() {
-        people.readHuman().forEach(System.out::println);
+        List<Human> list = people.readHuman();
+        if (list.size() > 0) {
+            list.forEach(System.out::println);
+        } else System.out.println("Список пуст");
     }
 
     private void add(BufferedReader reader) {
@@ -52,7 +56,7 @@ public class Menu {
     }
 
     private void delete(BufferedReader reader) {
-        System.out.print("Введите ваше имя для удаления: ");
+        System.out.print("Введите имя для удаления: ");
         try {
             String name = reader.readLine().trim();
             System.out.println("Удаление " + name + " " + (!people.deleteHuman(name) ? "не" : "") + "успешно");

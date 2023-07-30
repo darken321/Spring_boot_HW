@@ -40,6 +40,6 @@ public class ListBean implements People {
             if (index>=0) {
                 people.remove(index);
             }
-        return index > -1;
+        return index != -1;
     }
 }

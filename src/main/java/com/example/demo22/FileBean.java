@@ -66,6 +66,6 @@ public class FileBean implements People {
             new File(myFileProperty).delete();
             list.forEach(this::addHuman);
         }
-        return index > -1;
+        return index != -1;
     }
 }
