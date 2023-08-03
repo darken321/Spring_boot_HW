@@ -1,16 +1,15 @@
 package com.example.demo22;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Utils {
-    public static int indexOfHuman(String name, List<Human> people){
-        int index = -1;
+    public static int indexOfHuman(String name, List<Human> people) {
         for (int i = 0; i < people.size(); i++) {
-            if (people.get(i).getName().equals(name)) {
-                index = i;
-                break;
+            if (Objects.equals(people.get(i).getName(), name)) {
+                return i;
             }
         }
-        return index;
+        return -1;
     }
 }

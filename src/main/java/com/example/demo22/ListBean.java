@@ -22,11 +22,13 @@ public class ListBean implements People {
         people.add(new Human("Дима", 25));
         people.add(new Human("Миша", 33));
         people.add(new Human("Лена", 28));
+        people.add(new Human("Миша", 38));
+
     }
 
     @Override
-    public ArrayList<Human> readHuman() {
-        return (ArrayList<Human>) people;
+    public List<Human> readHuman() {
+        return people;
     }
 
     @Override
@@ -38,8 +40,8 @@ public class ListBean implements People {
     public boolean deleteHuman(String name) {
         int index = Utils.indexOfHuman(name, people);
             if (index>=0) {
-                people.remove(index);
+                people.removeIf(h -> h.getName().equals(name));
             }
-        return index != -1;
+        return index > -1;
     }
 }

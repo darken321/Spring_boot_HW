@@ -22,11 +22,6 @@ public class FileBean implements People {
     @PostConstruct
     public void init() {
         System.out.println("Метод init класса FileBean PostConstruct ");
-    }
-
-    @Override
-    public List<Human> readHuman() {
-        List<Human> list = new ArrayList<>();
         File file = new File(myFileProperty);
         if (!file.exists()) {
             try {
@@ -35,6 +30,11 @@ public class FileBean implements People {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    @Override
+    public List<Human> readHuman() {
+        List<Human> list = new ArrayList<>();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(myFileProperty))) {
             String name;
             int age;
@@ -66,6 +66,6 @@ public class FileBean implements People {
             new File(myFileProperty).delete();
             list.forEach(this::addHuman);
         }
-        return index != -1;
+        return index > -1;
     }
 }

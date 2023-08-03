@@ -12,12 +12,10 @@ import java.util.List;
 @Component
 public class Menu {
     private final People people;
-    private final ReadHuman readHuman;
 
     @Autowired
-    public Menu(People people, ReadHuman readHuman) {
+    public Menu(People people) {
         this.people = people;
-        this.readHuman = readHuman;
         System.out.println("Конструктор класса Menu");
     }
 
@@ -46,20 +44,34 @@ public class Menu {
 
     private void readAll() {
         List<Human> list = people.readHuman();
-        if (list.size() > 0) {
-            list.forEach(System.out::println);
-        } else System.out.println("Список пуст");
+        if (list.size()==0) {
+            System.out.println("Список пуст");
+            return;
+        }
+        list.forEach(System.out::println);
     }
 
     private void add(BufferedReader reader) {
-        people.addHuman(readHuman.readHuman(reader));
+        people.addHuman(this.readHuman(reader));
     }
 
     private void delete(BufferedReader reader) {
         System.out.print("Введите имя для удаления: ");
         try {
             String name = reader.readLine().trim();
-            System.out.println("Удаление " + name + " " + (!people.deleteHuman(name) ? "не" : "") + "успешно");
+            System.out.println("Удаление " + name + " " + (people.deleteHuman(name) ? "" : "не") + "успешно");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Human readHuman(BufferedReader bufferedReader) {
+        try {
+            System.out.print("Введите имя: ");
+            String name = bufferedReader.readLine().trim();
+            System.out.print("Введите возраст: ");
+            int age = Integer.parseInt(bufferedReader.readLine().trim());
+            return new Human(name, age);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
