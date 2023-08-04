@@ -1,12 +1,32 @@
 package com.example.demo22;
 
 public class Human {
+    private static int currentId = 0;
+    private int id ;
     private String name;
     private int age;
 
     public Human(String name, int age) {
+
+        this(currentId++, name, age);
         this.name = name;
         this.age = age;
+
+    }
+    public Human(int id, String name, int age) {
+
+        this.id=id;
+        this.name = name;
+        this.age = age;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -27,6 +47,9 @@ public class Human {
 
     @Override
     public String toString() {
-        return name + ' ' + age;
+        return
+               " id=" + id +
+               " " + name + ' ' +
+               " " + age;
     }
 }

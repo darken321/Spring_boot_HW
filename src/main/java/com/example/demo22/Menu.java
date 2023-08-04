@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.List;
 
 @Component
 public class Menu {
@@ -43,16 +42,23 @@ public class Menu {
     }
 
     private void readAll() {
-        List<Human> list = people.readHuman();
-        if (list.size()==0) {
+        if (people.readHuman().entrySet().size()==0) {
             System.out.println("Список пуст");
             return;
         }
-        list.forEach(System.out::println);
+        people.readHuman().entrySet().forEach(System.out::println);
     }
 
     private void add(BufferedReader reader) {
-        people.addHuman(this.readHuman(reader));
+        try {
+            System.out.print("Введите имя: ");
+            String name = reader.readLine().trim();
+            System.out.print("Введите возраст: ");
+            int age = Integer.parseInt(reader.readLine().trim());
+            people.addHuman(new Human(name, age));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void delete(BufferedReader reader) {
@@ -60,18 +66,6 @@ public class Menu {
         try {
             String name = reader.readLine().trim();
             System.out.println("Удаление " + name + " " + (people.deleteHuman(name) ? "" : "не") + "успешно");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private Human readHuman(BufferedReader bufferedReader) {
-        try {
-            System.out.print("Введите имя: ");
-            String name = bufferedReader.readLine().trim();
-            System.out.print("Введите возраст: ");
-            int age = Integer.parseInt(bufferedReader.readLine().trim());
-            return new Human(name, age);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
