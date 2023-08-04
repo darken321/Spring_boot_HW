@@ -2,6 +2,7 @@ package com.example.demo22;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 @Component
+@Profile("!api")
 public class Menu {
     private final People people;
 

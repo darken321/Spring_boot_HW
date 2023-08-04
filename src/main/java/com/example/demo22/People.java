@@ -9,7 +9,7 @@ import java.util.Map;
 public interface People {
     Map<Integer, Human> readHuman();
 
-    void addHuman(Human human);
+    Human addHuman(Human human);
 
     boolean deleteHuman(String name);
 }

@@ -2,20 +2,17 @@ package com.example.demo22;
 
 import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
-@Component
-@Profile("map")
-public class MapBean implements People {
+@RestController
+@Profile("api")
+public class HumanApiBean implements People {
     int maxId = 0;
 
     private final Map<Integer, Human> people = new HashMap<>();
-
-    public MapBean() {
-        System.out.println("Конструктор MapBean");
-    }
 
     @PostConstruct
     public void init() {
@@ -24,21 +21,26 @@ public class MapBean implements People {
         people.put(maxId++, new Human("Миша", 33));
         people.put(maxId++, new Human("Лена", 28));
         people.put(maxId++, new Human("Миша", 38));
+        people.put(maxId++, new Human("test", 111));
     }
 
     @Override
+    @GetMapping("api/v1/people")
     public Map<Integer, Human> readHuman() {
         return people;
     }
 
     @Override
-    public Human addHuman(Human human) {
+    @PostMapping("api/v1/people")
+    //ошибка!!
+    public Human addHuman(@RequestBody Human human) {
         people.put(maxId++, human);
         return human;
     }
 
     @Override
-    public boolean deleteHuman(String name) {
+    @GetMapping("api/v1/delete/{name}")
+    public boolean deleteHuman(@PathVariable String name) {
         return people.entrySet().removeIf(entry -> entry.getValue().getName().equals(name));
     }
 }
