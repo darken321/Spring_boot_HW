@@ -23,23 +23,34 @@ public class Menu {
 
     @PostConstruct
     public void menu() throws IOException {
+
         System.out.println("метод menu PostConstruct");
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             int input;
             do {
+                System.out.print("\u001B[92m");
                 System.out.println("\nВведите " +
                                    "1 для вывода всех, " +
                                    "2 для добавления, " +
                                    "3 для удаления, " +
                                    "0 для выхода");
-                input = Integer.parseInt(reader.readLine());
-                switch (input) {
-                    case 0 -> System.out.println("Пока!\n");
-                    case 1 -> readAll();
-                    case 2 -> add(reader);
-                    case 3 -> delete(reader);
-                    default -> System.out.println("Вы ввели " + input + " - неверное значение");
+                System.out.print("\u001B[0m");
+
+                try {
+                    input = Integer.parseInt(reader.readLine());
+                    switch (input) {
+                        case 0 -> System.out.println("Пока!\n");
+                        case 1 -> readAll();
+                        case 2 -> add(reader);
+                        case 3 -> delete(reader);
+                        default -> System.out.println("\u001B[31mВы ввели " + input + " - неверное значение\u001B[0m");
+                    }
                 }
+                catch (NumberFormatException e){
+                    System.out.println("\u001B[31mВы ввели неверное значение!!!\u001B[0m");
+                    input = -1;
+                }
+
             } while (input != 0);
         }
     }
@@ -54,9 +65,10 @@ public class Menu {
 
     private void add(BufferedReader reader) {
         try {
-            System.out.print("Введите имя: ");
+
+            System.out.print("\u001B[93mВведите имя: \u001B[0m");
             String name = reader.readLine().trim();
-            System.out.print("Введите возраст: ");
+            System.out.print("\u001B[93mВведите возраст: \u001B[0m");
             int age = Integer.parseInt(reader.readLine().trim());
             people.addHuman(new Human(0,name, age));
         } catch (IOException e) {
@@ -65,10 +77,10 @@ public class Menu {
     }
 
     private void delete(BufferedReader reader) {
-        System.out.print("Введите имя для удаления: ");
+        System.out.print("\u001B[93mВведите имя для удаления: \u001B[0m");
         try {
             String name = reader.readLine().trim();
-            System.out.println("Удаление " + name + " " + (people.deleteHuman(name) ? "" : "не") + "успешно");
+            System.out.println("Удаление " + "\u001B[38;5;206m" + name + "\u001B[0m" + (people.deleteHuman(name) ? "" : "\u001B[31m не\u001B[0m") + " успешно");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

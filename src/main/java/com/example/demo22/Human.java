@@ -48,8 +48,8 @@ public class Human {
     @Override
     public String toString() {
         return
-               " id=" + id +
-               " " + name + ' ' +
-               " " + age;
+               "\u001B[0mid " + "\u001B[38;5;206m"+ id +
+               "  \u001B[0m name "+ "\u001B[38;5;206m" + name +
+               "  \u001B[0m age " + "\u001B[38;5;206m" + age + "\u001B[0m";
     }
 }
