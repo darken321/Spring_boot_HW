@@ -1,72 +1,92 @@
-//package com.example.demo22;
-//
-//import jakarta.annotation.PostConstruct;
-//import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.context.annotation.Profile;
-//import org.springframework.stereotype.Component;
-//
-//import java.io.*;
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Map;
-//
-//@Component
-//@Profile("file")
-//public class FileBean implements People {
-//    @Value("${my.file.property}")
-//    private String myFileProperty;
-//
-//    public FileBean() {
-//        System.out.println("Конструктор FileBean");
-//    }
-//
-//    @PostConstruct
-//    public void init() {
-//        System.out.println("Метод init класса FileBean PostConstruct ");
-//        File file = new File(myFileProperty);
-//        if (!file.exists()) {
-//            try {
-//                file.createNewFile();
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//    }
-//
-//    @Override
-//    public Map<Integer, Human> readHuman() {
-//        List<Human> list = new ArrayList<>();
-//        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(myFileProperty))) {
-//            String name;
-//            int age;
-//            while ((name = bufferedReader.readLine()) != null) {
-//                age = Integer.parseInt(bufferedReader.readLine());
-//                list.add(new Human(name, age));
-//            }
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return list;
-//    }
-//
-//    @Override
-//    public void addHuman(Human human) {
-//        try (PrintWriter printWriter = new PrintWriter(new FileWriter(myFileProperty, true))) {
-//            printWriter.println(human.getName() + "\n" + human.getAge());
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//
-//    @Override
-//    public boolean deleteHuman(String searchName) {
-//        List<Human> list = this.readHuman();
-//        int index = Utils.indexOfHuman(searchName, list);
-//        if (index != -1) {
-//            list.remove(index);
-//            new File(myFileProperty).delete();
-//            list.forEach(this::addHuman);
-//        }
-//        return index > -1;
-//    }
-//}
+package com.example.demo22;
+
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
+
+import java.io.*;
+import java.util.*;
+
+@Component
+@Profile("file")
+public class FileBean implements People {
+    int maxId;
+
+    @Value("${my.file.property}")
+    private String myFileProperty;
+
+    public FileBean() {
+        System.out.println("Конструктор FileBean");
+    }
+
+    @PostConstruct
+    public void init() {
+        System.out.println("Метод init класса FileBean PostConstruct ");
+        File file = new File(myFileProperty);
+        if (!file.exists()) {
+            maxId = 0;
+            try (PrintWriter printWriter = new PrintWriter(new FileWriter(myFileProperty))) {
+                printWriter.println(maxId);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @Override
+    public List<Human> readHuman() {
+        Map<Integer, Human> map = new HashMap<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(myFileProperty))) {
+            int id;
+            String name;
+            int age;
+            maxId = Integer.parseInt(reader.readLine());
+            while ((name = reader.readLine()) != null) {
+                id = Integer.parseInt(reader.readLine());
+                age = Integer.parseInt(reader.readLine());
+                map.put(id, new Human(id, name, age));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return new ArrayList<>(map.values());
+    }
+
+    @Override
+    public Human addHuman(Human human) {
+
+        //чтение числа элементов
+        try (BufferedReader reader = new BufferedReader(new FileReader(myFileProperty))) {
+            maxId = Integer.parseInt(reader.readLine());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        List<Human> list = readHuman();
+        human.setId(maxId++);
+        list.add(human);
+
+        writeAllHumansToFile(list);
+        return human;
+    }
+
+    @Override
+    public boolean deleteHuman(String name) {
+        List<Human> list = readHuman();
+        if (list.removeIf(entry -> Objects.equals(name, entry.getName()))) {
+            writeAllHumansToFile(list);
+            return true;
+        }
+        return false;
+    }
+
+    private void writeAllHumansToFile(List<Human> list) {
+        try (PrintWriter printWriter = new PrintWriter(new FileWriter(myFileProperty))) {
+            printWriter.println(maxId);
+            list.forEach(h -> printWriter.println(h.getName() + "\n" + h.getId() + "\n" + h.getAge()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}

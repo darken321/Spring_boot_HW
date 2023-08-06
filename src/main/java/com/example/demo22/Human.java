@@ -6,19 +6,19 @@ public class Human {
     private String name;
     private int age;
 
-    public Human(String name, int age) {
-        this.id = currentId++;
-//        this(currentId++, name, age);
-        this.name = name;
-        this.age = age;
-
-    }
-//    public Human(int id, String name, int age) {
-//
-//        this.id=id;
+//    public Human(String name, int age) {
+//        this.id = currentId++;
+////        this(currentId++, name, age);
 //        this.name = name;
 //        this.age = age;
+//
 //    }
+    public Human(int id, String name, int age) {
+
+        this.id=id;
+        this.name = name;
+        this.age = age;
+    }
 
 
     public int getId() {

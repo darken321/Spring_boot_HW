@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 @Component
 @Profile("!api")
 public class Menu {
+
     private final People people;
 
     @Autowired
@@ -44,11 +45,11 @@ public class Menu {
     }
 
     private void readAll() {
-        if (people.readHuman().entrySet().size()==0) {
+        if (people.readHuman().size()==0) {
             System.out.println("Список пуст");
             return;
         }
-        people.readHuman().entrySet().forEach(System.out::println);
+        people.readHuman().forEach(System.out::println);
     }
 
     private void add(BufferedReader reader) {
@@ -57,7 +58,7 @@ public class Menu {
             String name = reader.readLine().trim();
             System.out.print("Введите возраст: ");
             int age = Integer.parseInt(reader.readLine().trim());
-            people.addHuman(new Human(name, age));
+            people.addHuman(new Human(0,name, age));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

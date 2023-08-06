@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface People {
-    Map<Integer, Human> readHuman();
+    List<Human> readHuman();
 
     Human addHuman(Human human);
 
