@@ -9,7 +9,7 @@ import java.util.*;
 @Component
 @Profile("map")
 public class MapBean implements People {
-    int maxId = 1;
+    int maxId = 0;
 
     private final Map<Integer, Human> people = new HashMap<>();
 
@@ -20,10 +20,10 @@ public class MapBean implements People {
     @PostConstruct
     public void init() {
         System.out.println("Метод init класса ListBean PostConstruct");
-        people.put(maxId++, new Human(maxId,"Дима", 25));
-        people.put(maxId++, new Human(maxId,"Миша", 33));
-        people.put(maxId++, new Human(maxId,"Лена", 28));
-        people.put(maxId++, new Human(maxId,"Миша", 38));
+        people.put(++maxId, new Human(maxId,"Дима", 25));
+        people.put(++maxId, new Human(maxId,"Миша", 33));
+        people.put(++maxId, new Human(maxId,"Лена", 28));
+        people.put(++maxId, new Human(maxId,"Миша", 38));
     }
 
     @Override
@@ -33,7 +33,7 @@ public class MapBean implements People {
 
     @Override
     public Human addHuman(Human human) {
-        human.setId(maxId++);
+        human.setId(++maxId);
         people.put(maxId, human);
         return human;
     }

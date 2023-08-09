@@ -11,7 +11,7 @@ import java.util.*;
 @Component
 @Profile("file")
 public class FileBean implements People {
-    int maxId;
+    int maxId = 0;
 
     @Value("${my.file.property}")
     private String myFileProperty;
@@ -25,7 +25,6 @@ public class FileBean implements People {
         System.out.println("Метод init класса FileBean PostConstruct ");
         File file = new File(myFileProperty);
         if (!file.exists()) {
-            maxId = 0;
             try (PrintWriter printWriter = new PrintWriter(new FileWriter(myFileProperty))) {
                 printWriter.println(maxId);
             } catch (IOException e) {
