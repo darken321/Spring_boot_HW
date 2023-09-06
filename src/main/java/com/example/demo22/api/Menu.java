@@ -1,5 +1,7 @@
-package com.example.demo22;
+package com.example.demo22.api;
 
+import com.example.demo22.model.Human;
+import com.example.demo22.model.People;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -50,7 +52,6 @@ public class Menu {
                     System.out.println("\u001B[31mВы ввели неверное значение!!!\u001B[0m");
                     input = -1;
                 }
-
             } while (input != 0);
         }
     }
@@ -65,7 +66,6 @@ public class Menu {
 
     private void add(BufferedReader reader) {
         try {
-
             System.out.print("\u001B[93mВведите имя: \u001B[0m");
             String name = reader.readLine().trim();
             System.out.print("\u001B[93mВведите возраст: \u001B[0m");

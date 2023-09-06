@@ -1,5 +1,7 @@
-package com.example.demo22;
+package com.example.demo22.model;
 
+import com.example.demo22.model.Human;
+import com.example.demo22.model.People;
 import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
